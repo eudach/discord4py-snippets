@@ -1,0 +1,39 @@
+{
+    "name": "discord4py-snippets",
+    "displayName": "discord4py Code Snippets",
+    "description": "Code snippets for the library discord4py(discord-message-components)",
+    "version": "0.5",
+    "publisher": "eudach",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/eudach/discord4py-snippets"
+    },
+    "icon": "icon.png",
+    "engines": {
+        "vscode": "^0.10.0"
+    },
+    "keywords": [
+        "discord.py",
+        "discord",
+        "discord bot",
+        "discord snippets",
+        "bot discord",
+        "discord.py snippets",
+        "discord.py code snippets",
+        "discord4py snippets",
+        "discord-message-components snippets",
+        "discord-message-components"
+    ],
+    "categories": [
+        "Snippets"
+    ],
+    "contributes": {
+        "snippets": 
+        [
+            {
+                "language": "python",
+                "path": "./snippets.json"
+            }
+        ]
+    }
+}

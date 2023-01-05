@@ -1,1 +1,0 @@
-# discord4py-snippets

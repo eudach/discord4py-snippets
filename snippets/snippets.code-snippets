@@ -1,0 +1,564 @@
+{
+	"Command out of cog":
+    {
+        "prefix": "%cmd",
+        "body":[
+            "@${1|bot,client|}.command(name=\"${2:commandname}\", aliases=[\"$3\"], description=\"$4\", help=\"${5:help}\", usage=\"\")",
+            "async def _${2:commandname}(ctx:commands.Context):",
+            "    await ctx.send(\"$0\")"
+        ],
+        "description": "A complete command outside of a cog"
+    },
+
+    "Basic command out of cog":
+    {
+        "prefix": "%cmdb",
+        "body":[
+            "@${1|bot,client|}.command(name=\"${2:commandname}\", aliases=[\"$3\"])",
+            "async def _${2:commandname}(ctx:commands.Context):",
+            "    await ctx.send(\"Hello World\")$0"
+        ],
+        "description": "Basic command outside of a cog"
+
+    },
+
+    "Command inside a cog":
+    {
+        "prefix": "%cgcmd",
+        "body":[
+            "@commands.command(name=\"${1:commandname}\", aliases=[\"$2\"], description=\"${3:description_command}\", help=\"${4:help}\", usage=\"\")",
+            "async def _${1:commandname}(self, ctx:commands.Context):",
+            "    await ctx.send(\"$0\")"
+
+        ],
+        "description": "A complete command inside a cog"
+    },
+
+    "Basic command inside a cog":{
+        "prefix": "%cgcmdb",
+        "body":[
+            "@commands.command(name=\"${1:commandname}\", aliases=[\"$2\"])",
+            "async def _${1:commandname}(ctx:commands.Context):",
+            "    await ctx.send(\"Hello World\")$0"
+        ],
+        "description": "Basic code snippet for a command inside a cog"
+    },
+
+    "Help Command ":{
+        "prefix": "%help",
+        "body":[
+            "class BotHelp(commands.HelpCommand):",
+            "",
+            "    async def send_bot_help(self, mapping):",
+            "        await self.context.send(\":D\")",
+            "",
+            "    async def send_command_help(self, command:commands.Command):",
+            "        description = command.description if command.description is not None else \"Not proportioned\"",
+            "        help_ = command.help if command.help is not None else \"Not proportioned\"",
+            "        usage = command.usage if command.usage is not None else \"Not proportioned\"",
+            "        embed = discord.Embed(title=f\"{command.name} Help\", description=description, color=discord.Color.dark_gray())",
+            "        embed.add_field(name=\"Help\", value=help_, inline=False)",
+            "        embed.add_field(name=\"Usage\", value=usage, inline=False)",
+            "        await self.context.send(embed=embed)",
+            "",
+            "    async def send_group_help(self, group:commands.Group):",
+            "        description = group.description if group.description is not None else \"Not proportioned\"",
+            "        embed = discord.Embed(title=f\"{group.name} Help\", description=description, color=discord.Color.dark_gray())",
+            "        count = 1",
+            "        for command in group.commands:",
+            "            description = command.description if command.description is not None else \"Not proportioned\"",
+            "            embed.add_field(name=f\"`{count}` - {command.name}\", value=description, inline=False)",
+            "            count+=1",
+            "        await self.context.send(embed=embed)",
+            "",
+            "    async def send_cog_help(self, cog:commands.Cog):",
+            "        pass",
+            "",
+            "    async def send_error_message(self, error:commands.Error):",
+            "        pass$0"
+
+        ],
+        "description": "Code snippet of the help command for the bot in main file"
+
+    },
+
+    "Embed base":{
+        "prefix": "%emb",
+        "body": [
+            "embed = discord.Embed(title=\"$1\", description=\"$2\", color=discord.Color.${3|red,green,blue,random,gray,gold,orange,purple|}())"
+        ],
+        "description": "Code snippet for an instance of the embed class"
+    },
+    "Embed author":{
+        "prefix": "%embauthor",
+        "body":[
+            "embed.set_author(name=\"$1\",  icon_url=\"$2\")$0"
+        ],
+        "description": "Code snippet for put the author in the embed"
+    },
+    "Embed Field":{
+        "prefix": "embfield",
+        "body": [
+            "embed.add_field(name=\"$1\", value=\"$2\", inline=${3|True,False|})$0"
+        ],
+        "description": "Code snippet for add a field to an embed"
+    },
+    "Embed image":{
+        "prefix": "%embimg",
+        "body": [
+            "embed.set_image(url=\"$0\")"
+        ],
+        "description": "Code snippet to set an image for an embed"
+
+    },
+    "Embed thumbail":{
+        "prefix": "%embthum",
+        "body":[
+            "embed.set_thumbnail(url=\"$0\")"
+        ],
+        "description": "Code snippet to set a thumbnail for an embed"
+    },
+    "Embed footer":{
+        "prefix": "%embfoot",
+        "body":[
+            "embed.set_footer(text=\"$1\", icon_url=\"$0\")"
+        ],
+        "description": "Code snippet to put a footer for an insert"
+    },
+
+    "Discord4py Cog Templete":{
+        "prefix": "%cog",
+        "body":[
+            "import discod",
+            "from discord.ext import commands",
+            "",
+            "class ${1:${TM_FILENAME_BASE/(.*)/${1:/camelcase}/}}(commands.Cog):",
+            "    def __init__(self, bot:commands.Bot):",
+            "        self.bot = bot",
+            "",
+            "    $0",
+            "",
+            "def setup(bot:commands.Bot):",
+            "    bot.add_cog(${1:CogName}(bot))"
+        ],
+		"description": "Code snippet to create a cog"
+    },
+
+	"Command cooldown":{
+		"prefix": "%cooldown",
+		"body": [
+			"@commands.cooldown(${1:rate}, ${2:per}, commands.BucketType.${3|user,member,guild,channel,category|})"
+		],
+		"description": "Code snippet to set the cooldown of a command"
+	},
+
+	"Member has role to command":{
+		"prefix": "%cmdhasrole",
+		"body": [
+			"@commands.has_role(${1:role})"
+		],
+		"description": "Code snippet decorator to check if the caller has the specified role"
+
+	},
+
+	"Command Error decorator":{
+		"prefix": "%errorcmd",
+		"body": [
+			"@${1:function_cmd}.error",
+			"async def ${1:function_cmd}_error(self, ctx:commands.Context, error):",
+			"    if isinstance(error, commands.MissingRequiredArgument):",
+			"        embed = discord.Embed(title=\"Error\", description=\"Missing required arguments\", color=discord.Color.red())",
+			"        await ctx.reply(embed=embed, mention_author=False)$0"
+		],
+		"description": "Code snippet to create a custom response to a command error"
+	},
+
+	"Check out a cog":{
+		"prefix": "%check",
+		"body": [
+			"@${1:bot,client}.check",
+			"async def ${2:check_name}(ctx):",
+			"    $0pass"
+		],
+		"description": "Code snippet create a check in @commands.check(checker_name)"
+	},
+
+	"Check inside a cog":{
+		"prefix": "%cgcheck",
+		"body": [
+			"async def checker_${TM_FILENAME_BASE}(self, ctx:commands.Context):",
+			"    if ${1:conditional}:",
+			"        return True",
+			"",
+			"    else:",
+			"        return False"
+		],
+		"description": "Create a check used in @commands.check(checker_name)"
+	},
+
+	"add Button":{
+		"prefix": "%button",
+		"body": [
+			"button = discord.Button(label=\"\", style=discord.ButtonStyle.${1|green,red,blurple,gray|}, emoji=\"\", disabled=False, custom_id=\"bttnid\")",
+			"await ${2|ctx.send,interaction.respond|}(components=[[button]])"
+		],
+		"description": "Code snippet to create a button"
+
+	},
+	"add SelectMenu":{
+		"prefix": "%selectmenu",
+		"body": [
+			"${1:select_menu${CURRENT_SECOND}} = discord.SelectMenu(",
+			"    placeholder=\"${2:Select}\",",
+			"    custom_id=\"${3:select_menu1_id}\",",
+			"    min_values=1,",
+			"    max_values=1,",
+			"    disabled=False,",
+			"",
+			"    options= [",
+			"        discord.SelectOption(label=\"Option1\", emoji=\"1️⃣\", description=\"Option1 description\", value=\"selectvalue1\"),",
+			"        discord.SelectOption(label=\"Option2\", emoji=\"2️⃣\", description=\"Option2 description\", value=\"selectvalue2\")",
+			"    ]",
+			")",
+			"await ${4|ctx.send,interaction.respond|}(components=[$1])"
+		],
+		"description": "Code snippet to create a select menu"
+	},
+	"add Modal (can only be used in interactions)":{
+		"prefix": "%modal",
+		"body": [
+			"${1:modal${CURRENT_SECOND}} = discord.Modal(",
+			"",
+			"    title=\"\",",
+			"    custom_id=\"${2:modal_id}\",",
+			"    components=[",
+			"        discord.TextInput(label=\"\", custom_id=\"textinput1\", min_length=1, max_length=150, required=True, value=\"text1\", placeholder=\"Text Input\")",
+			"    ]",
+			")"
+		],
+		"description": "Code snippet to create a modal"
+	},
+
+	"Base event out a cog":{
+
+		"prefix": "%event",
+		"body": [
+			"@${1|bot,client|}.event",
+			"async def ${2|on_ready,on_member_join,on_member_remove,on_button_click,on_message|}($3):",
+			"    $0pass"
+		],
+		"description": "Event base outside cogs"
+	},
+
+	"Base event inside a cog":{
+		"prefix": "%cgevent",
+		"body": [
+			"@commands.Cog.listener(name=\"${1|on_ready,on_member_join,on_member_remove,on_button_click,on_message|}\")",
+			"async def _${2:function_name}(self, $3):",
+			"    $0pass"
+		],
+		"description": "Event base inside a cog"
+	},
+
+	"Member evets out a cog":{
+		"prefix": "%event_member",
+		"body": [
+			"@${1|bot,client|}.event",
+			"async def on_member_join(member:discord.Member):",
+			"    print(f\"{member.name} join\")",
+			"",
+			"@${1|bot,client|}.event",
+			"async def on_member_remove(member:discord.Member):",
+			"    print(f\"{member.name} leave\")",
+			"",
+			"@${1|bot,client|}.event",
+			"async def on_member_update(before:discord.Member, after:discord.Member):",
+			"    print(f\"{before} before\")",
+			"    print(f\"{after} after\")"
+		],
+		"description": "Code snippet containing various member events out a cog"
+	},
+	
+	"Member events inside a cog":{
+		"prefix": "%cgevent_member",
+		"body": [
+			"@commands.Cog.listener(name=\"on_member_join\")",
+			"async def ${1:function_member_join}(self, member:discord.Member):",
+			"    print(f\"{member.name} join\")",
+			"",
+			"@commands.Cog.listener(name=\"on_member_remove\")",
+			"async def ${2:function_member_remove}(self, member:discord.Member):",
+			"    print(f\"{member.name} leave\")",
+			"",
+			"@commands.Cog.listener(name=\"on_member_update\")",
+			"async def ${3:function_member_update}(self, before:discord.Member, after:discord.Member):",
+			"    print(f\"{before} before\")",
+			"    print(f\"{after} after\")"
+
+		],
+		"description": "Code snippet containing various member events inside a cog"
+	},
+
+	"Guild events out a cog":{
+		"prefix": "%event_guild",
+		"body": [
+			"@${1|bot,client|}.event",
+			"async def on_guild_join(guild:discord.Guild):",
+			"    print(f\"{guild.name} join\")",
+			"",
+			"@${1|bot,client|}.event",
+			"async def on_guild_remove(guild:discord.Guild):",
+			"    print(f\"{guild.name} leave\")",
+			"",
+			"@${1|bot,client|}.event",
+			"async def on_guild_update(before:discord.Guild, after:discord.Guild):",
+			"    print(f\"{before} before\")",
+			"    print(f\"{after} after\")"
+		],
+		"description": "Code snippet containing various guild events out a cog (things like the bot entering a guild, leaving, when it is modified)"
+	},
+
+	"Guild events inside a cog":{
+		"prefix": "%cgevent_guild",
+		"body": [
+			"@commands.Cog.listener(name=\"on_guild_join\")",
+			"async def ${1:function_guild_join}(self, guild:discord.Guild):",
+			"    print(f\"{guild.name} joined\")",
+			"",
+			"@commands.Cog.listener(name=\"on_guild_remove\")",
+			"async def ${2:function_guild_remove}(self, guild:discord.Guild):",
+			"    print(f\"{guild.name} leaved\")",
+			"",
+			"@commands.Cog.listener(name=\"on_guild_update\")",
+			"async def ${3:function_guild_update}(self, before:discord.Guild, after:discord.Guild):",
+			"    print(f\"{before} before\")",
+			"    print(f\"{after} after\")"
+		],
+		"description": "Code snippet containing various guild events inside a cog (things like the bot entering a guild, leaving, when it is modified)"
+	},
+
+	"Message events out a cog":{
+		"prefix": "%event_message",
+		"body": [
+			"@${1|bot,client|}.event",
+			"async def on_message(message:discord.Message):",
+			"    print(f\"{message.content} send\")",
+			"",
+			"@${1|bot,client|}.event",
+			"async def on_message_delete(message:discord.Guild):",
+			"    print(f\"{message.content} deleted\")",
+			"",
+			"@${1|bot,client|}.event",
+			"async def on_message_edit(before:discord.Message, after:discord.Message):",
+			"    print(f\"{before.content} before\")",
+			"    print(f\"{after.content} after\")"
+		],
+		"description": "Code snippet containing various events for messages out a cog (such as messages sent, edited, and removed)"
+	},
+
+	"Message events inside a cog":{
+		"prefix": "%cgevent_messages",
+		"body": [
+			"@commands.Cog.listener(name=\"on_message\")",
+			"async def ${1:function_message_send}(self, message:discord.Message):",
+			"    print(f\"{message.content} send\")",
+			"",
+			"@commands.Cog.listener(name=\"on_message_delete\")",
+			"async def ${2:function_message_deleted}(self, message:discord.Message):",
+			"    print(f\"{message.content} deleted\")",
+			"",
+			"@commands.Cog.listener(name=\"on_message_edit\")",
+			"async def ${3:function_message_edit}(self, before:discord.Message, after:discord.Message):",
+			"    print(f\"{before.content} before\")",
+			"    print(f\"{after.content} after\")"
+		],
+		"description": "Code snippet containing various events for messages inside a cog (such as messages sent, edited, and removed)"
+	},
+
+	"Event when a button is pressed out a cog":{
+		"prefix": "%button_click",
+		"body": [
+			"@${1|bot,client|}.on_click(custom_id=\"${2:button_id}\")",
+			"async def ${3:button_clicked}(interaction:discord.ComponentInteraction, button:discord.Button):",
+			"    interaction.respond(\"Clicked\")"
+		],
+		"description": "Event code snippet when a button is pressed out a cog"
+	},
+
+	"Event when a button is pressed inside a cog":{
+		"prefix": "%cgbutton_click",
+		"body": [
+			"@commands.Cog.on_click(custom_id=\"${1:button_id}\")",
+			"async def ${2:button_clicked}(self, interaction:discord.ComponentInteraction, button:discord.Button):",
+			"    interaction.respond(\"Clicked\")"
+		],
+		"description": "Event code snippet when a button is pressed inside a cog"
+	},
+
+	"Event when a selectmenu is selected out a cog":{
+		"prefix": "%selectmenu_select",
+		"body": [
+			"@${1|bot,client|}.on_select(custom_id=\"${2:select_menu_id}\")",
+			"async def ${3:select_menu_selected}(interaction:discord.ComponentInteraction, select_menu:discord.SelectMenu):",
+			"    interaction.respond(f\"option: {select_menu.values[0]}\")"
+
+		],
+		"description": "Code snippet event when you select an option (Select Option) in a SelectMenu out a cog"
+	},
+
+	"Event when a selectmenu is selected inside a cog":{
+		"prefix": "%cgselectmenu_select",
+		"body": [
+			"@commands.Cog.on_select(custom_id=\"${1:select_menu_id}\")",
+			"async def ${2:select_menu_selected}(self, interaction:discord.ComponentInteraction, select_menu:discord.SelectMenu):",
+			"    $0interaction.respond(f\"option: {select_menu.values[0]}\")"
+		],
+		"description": "Code snippet event when you select an option (Select Option) in a SelectMenu inside a cog"
+	},
+
+	"Event when modal is sended out a cog":{
+		"prefix": "%modal_send",
+		"body": [
+			"@${1|bot,client|}.on_submit(custom_id=\"${2:modal_id}\")",
+			"async def ${3:modal_sended}(interaction:discord.ModalSubmitInteraction):",
+			"    await interaction.respond(\"Modal received\")$0"
+		],
+		"description": "Event snippet code received when a bot modal is sent out a cog"
+	},
+
+	"Event when modal is sended inside a cog":{
+		"prefix": "%cgmodal_send",
+		"body": [
+			"@commands.Cog.on_submit(custom_id=\"${1:modal_id}\")",
+			"async def ${2:modal_sended}(self, interaction:discord.ModalSubmitInteraction):",
+			"    await interaction.respond(\"Modal received\")$0"
+		],
+		"description": "Event snippet code received when a bot modal is sent inside a cog"
+	},
+
+	"Basic bot":{
+		"prefix": "%bot",
+		"body": [
+			"import discord",
+			"from discord.ext import commands",
+			"",
+			"",
+			"bot = commands.Bot(command_prefix=\"!\")",
+			"token = \"${1:your_token_bot}\" ",
+			"",
+			"@bot.event",
+			"async def on_ready():",
+			"    print(f\"{bot.user.name} Logged\")",
+			"",
+			"",
+			"@bot.command(name=\"ping\")",
+			"async def _ping(ctx:commands.Context):",
+			"    await ctx.send(\"pong!\")",
+			"",
+			"",
+			"if __name___ == \"__main__\":",
+			"    bot.run(token)$0"
+		],
+		"description": "Code snippet to create a basic bot"
+	},
+
+	"Advanced bot":{
+		"prefix": "%bot_advanced",
+		"body": [
+			"import discord",
+			"from discord.ext import commands",
+			"",
+			"",
+			"${1:bot} = commands.Bot(command_prefix=\"${2:prefix}\", help=None, sync_commands=True, intents=discord.Intents.all())",
+			"token = \"${3:your_token_bot}\" ",
+			"",
+			"@${1:bot}.event",
+			"async def on_ready():",
+			"    print(f\"{${1:bot}.user.name} Logged\")",
+			"",
+			"",
+			"@${1:bot}.command(name=\"ping\", description=\"Get ping\", usage=f\"{${1:bot}.command_prefix}ping\", help=\"ping\")",
+			"async def _ping(ctx:commands.Context):",
+			"    ping = round(${1:bot}.latency*1000)",
+			"    await ctx.send(f\"{ping} ms\")",
+			"",
+			"",
+			"@${1:bot}.slash_command(name=\"ping\", description=\"Get ping\", allow_dm=True)",
+			"async def _slashping(interaction:discord.ApplicationCommandInteraction):",
+			"    ping = round(${1:bot}.latency*1000)",
+			"    await interaction.respond(f\"{ping} ms\")",
+			"",
+			"",
+			"\"\"\"",
+			"#Cog",
+			"list_cogs = []",
+			"try:",
+			"    dir = listdir(\"./cogs\")",
+			"except:",
+			"    print(\"Cogs folder not found\")",
+			"else:",
+			"    for i in dir:",
+			"        if \"__pychache__\" == i: continue",
+			"        if i.endswith(\".py\"):",
+			"            list_cogs.append(f\"cogs.{i[:-3]}\")",
+			"        else:",
+			"            for e in listdir(f\"./cogs/{i}\"):",
+			"                if \"__pychache__\" == e: continue",
+			"                if e.endswith(\".py\"):",
+			"                    list_cogs.append(f\"cogs.{i}.{e[:-3]}\")",
+			"\"\"\" ",
+			"",
+			"",
+			"if __name___ == \"__main__\":",
+			"    \"\"\"",
+			"    for cog in list_cogs:",
+			"        bot.load_extension(cog)",
+			"    \"\"\"",
+			"    ${1:bot}.run(token)$0"
+		],
+		"description": "Code snippet that spawns an advanced bot, by default it has a cog loader and 2 commands"
+	},
+	"Slash command out a cog":{
+		"prefix": "%slash",
+		"body": [
+			"@${1|bot,client|}.slash_command(name=\"$2\", description=\"$3\", allow_dm=${4|False,True|}, options=[])",
+			"async def ${5:function_name}(interaction:discord.ApplicationCommandInteraction):",
+			"    await interaction.respond(\"$0\")"
+		],
+		"description": "Code snippet of an application command out a cog"
+	},
+
+	"Slash command inside a cog":{
+		"prefix": "%cgslash",
+		"body": [
+			"@commands.Cog.slash_command(name=\"$2\", description=\"$3\", allow_dm=${4|False,True|}, options=[])",
+			"async def ${5:function_name}(self, interaction:discord.ApplicationCommandInteraction):",
+			"    await interaction.respond(\"$0\")"
+		],
+		"description": "Code snippet of an application command inside a cog"
+	},
+
+	"Get":{
+		
+		"prefix": "%get",
+		"body": [
+			"discord.utils.get(${1:iterable}, ${2:attrs})",
+			"#examp: channel = discord.utils.get(id=1059889859682426234, ctx.guild.channels)"
+		],
+		"description": "Code snippet iterate a list of data with discord.utils.get"
+	},
+
+	"Wait for":{
+		"prefix": "%wait",
+		"body": [
+			"try:",
+			"    wait_ = ${1:bot,client}.wait_for(\"${2:event}\", check:${3:func_checker}, timeout=${4:seconds})",
+			"except asyncio.TimeoutError:",
+			"    await ${5|ctx.send,interaction.respond|}(\"You took too long to reply\")",
+			"else:",
+			"    $0pass"
+		],
+		"description": "Code snippet to wait for the event of a certain member"
+	}
+
+}

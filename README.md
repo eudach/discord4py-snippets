@@ -4,19 +4,29 @@ This is just a code snippet that is developed for the [discord4py](https://githu
 <br>
 <br>
 
+# Change Logs
+
+## [ 0.7.0 ] - 2023/04/15
+❌ Removed the snippet get (it became obsolete)
+<br>
+✅ Fixed a problem with the snippet `%errorcmd`
+<br>
+✅ Fixed a problem with the snippet `%cog`
+<br>
+✅ Fixed a problem with the snippet `%emb`, `%embauthor`
+
 # Usage
 
 ## Specials
 | `Name`                     | Description                                   | Prefixes       |
 | :---                       |    :----:                                     |           ---: |
-| Basic bot                  | Create a basic bot                            | `%bot`        |
+| Basic bot                  | Create a basic bot                            | `%bot`         |
 | Advanced bot               | Create an advanced bot                        | `%bot_advanced`|
 | Help command               | The help command for the bot in main file     | `%help`        |
 | Cog                        | Create a cog                                  | `%cog`         |
 | Command cooldown           | Set the cooldown of a command                 | `%cooldown`    |
 | Member has role to command | Check if the caller has the specified role    | `%cmdhasrole`  |
-| Command Error decorator    | Create a custom response to a command error   | `errorcmd`     |
-| Get                        | Iterate a list of data with discord.utils.get | `%get`         |
+| Command Error decorator    | Create a custom response to a command error   | `%errorcmd`    |
 | Wait for                   | Wait for the event of a certain member        | `%wait`        |
 
 <br>
@@ -25,7 +35,7 @@ This is just a code snippet that is developed for the [discord4py](https://githu
 | `Name`                     | Description                                 | Prefixes      |
 | :---                       |    :----:                                   |          ---: |
 | Button                     | Create a button                             | `%button`     |
-| SelectMenu                 | Create a SelectMenu                         | `%selectmenu`  |
+| SelectMenu                 | Create a SelectMenu                         | `%selectmenu` |
 | Modal                      | Create a Modal                              | `%modal`      |     
 
 <br>
@@ -72,30 +82,20 @@ This is just a code snippet that is developed for the [discord4py](https://githu
 | Embed Field               | Add a field to an embed          | `%embfield`     |
 | Embed image               | Set an image for an embed        | `%embimg`       |
 | Embed thumbail            | Set a thumbnail for an embed     | `%embthum`      |
-| Embed footer              | Put a footer for an embed        | `%embfoot`       |
+| Embed footer              | Put a footer for an embed        | `%embfoot`      |
 
 
 
 
 ## Examples
 ```py
-#Check
-async def is_owner(ctx):
-    if ctx.author.id == bot.owner_id:
-        return True
-    else:
-        return False
-
+#Command
 @bot.command()
-@commands.check(is_owner)
 async def pong(ctx):
     #Wait for
     try:
         message = bot.wait_for("message", check= lambda interaction: interaction.author.id == ctx.author.id and interaction.channel.id == ctx.channel.id, timeout=30)
     except asyncio.TimeoutError:
         return await ctx.send("You took too long to reply")
-
-    #Get
-    role = discord.utils.get(id=1059889859682426234, ctx.author.roles)
 
 ```

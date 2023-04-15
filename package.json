@@ -2,7 +2,7 @@
     "name": "discord4py-snippets",
     "displayName": "discord4py Code Snippets",
     "description": "Code snippets for the library discord4py(discord-message-components)",
-    "version": "0.6.0",
+    "version": "0.7.0",
     "publisher": "eudach",
     "repository": {
         "type": "git",

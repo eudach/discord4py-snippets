@@ -97,7 +97,7 @@
         "description": "Code snippet for put the author in the embed"
     },
     "Embed Field":{
-        "prefix": "embfield",
+        "prefix": "%embfield",
         "body": [
             "embed.add_field(name=\"$1\", value=\"$2\", inline=${3|True,False|})$0"
         ],
@@ -129,7 +129,7 @@
     "Discord4py Cog Templete":{
         "prefix": "%cog",
         "body":[
-            "import discod",
+            "import discord",
             "from discord.ext import commands",
             "",
             "class ${1:${TM_FILENAME_BASE/(.*)/${1:/camelcase}/}}(commands.Cog):",
@@ -164,8 +164,20 @@
 	"Command Error decorator":{
 		"prefix": "%errorcmd",
 		"body": [
-			"@${1:function_cmd}.error",
-			"async def ${1:function_cmd}_error(self, ctx:commands.Context, error):",
+			"@${1:function_name}.error",
+			"async def ${1:function_name}_error(ctx:commands.Context, error):",
+			"    if isinstance(error, commands.MissingRequiredArgument):",
+			"        embed = discord.Embed(title=\"Error\", description=\"Missing required arguments\", color=discord.Color.red())",
+			"        await ctx.reply(embed=embed, mention_author=False)$0"
+		],
+		"description": "Code snippet to create a custom response to a command error"
+	},
+
+	"Command Error decorator Inside Cog":{
+		"prefix": "%cgerrorcmd",
+		"body": [
+			"@${1:function_name}.error",
+			"async def ${1:function_name}_error(self, ctx:commands.Context, error):",
 			"    if isinstance(error, commands.MissingRequiredArgument):",
 			"        embed = discord.Embed(title=\"Error\", description=\"Missing required arguments\", color=discord.Color.red())",
 			"        await ctx.reply(embed=embed, mention_author=False)$0"
@@ -176,9 +188,9 @@
 	"Check out a cog":{
 		"prefix": "%check",
 		"body": [
-			"@${1:bot,client}.check",
+			"@${1|bot,client|}.check",
 			"async def ${2:check_name}(ctx):",
-			"    $0pass"
+			"    pass$0"
 		],
 		"description": "Code snippet create a check in @commands.check(checker_name)"
 	},
@@ -186,12 +198,9 @@
 	"Check inside a cog":{
 		"prefix": "%cgcheck",
 		"body": [
-			"async def checker_${TM_FILENAME_BASE}(self, ctx:commands.Context):",
-			"    if ${1:conditional}:",
-			"        return True",
-			"",
-			"    else:",
-			"        return False"
+			"@commands.check.check",
+			"async def ${1:check_name}(ctx):",
+			"    pass$0"
 		],
 		"description": "Create a check used in @commands.check(checker_name)"
 	},
@@ -456,7 +465,7 @@
 			"    await ctx.send(\"pong!\")",
 			"",
 			"",
-			"if __name___ == \"__main__\":",
+			"if __name__ == \"__main__\":",
 			"    bot.run(token)$0"
 		],
 		"description": "Code snippet to create a basic bot"
@@ -509,7 +518,7 @@
 			"\"\"\" ",
 			"",
 			"",
-			"if __name___ == \"__main__\":",
+			"if __name__ == \"__main__\":",
 			"    \"\"\"",
 			"    for cog in list_cogs:",
 			"        bot.load_extension(cog)",
@@ -536,16 +545,6 @@
 			"    await interaction.respond(\"$0\")"
 		],
 		"description": "Code snippet of an application command inside a cog"
-	},
-
-	"Get":{
-		
-		"prefix": "%get",
-		"body": [
-			"discord.utils.get(${1:iterable}, ${2:attrs})",
-			"#examp: channel = discord.utils.get(id=1059889859682426234, ctx.guild.channels)"
-		],
-		"description": "Code snippet iterate a list of data with discord.utils.get"
 	},
 
 	"Wait for":{
